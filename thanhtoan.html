@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="thanhtoan.css"> 
+    <title>Thanh toán</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Thông tin thanh toán</h2>
+        <div id="product-info" class="mb-4"></div>
+
+        <!-- Danh sách sản phẩm trong giỏ hàng -->
+        <h4>Sản phẩm trong giỏ hàng:</h4>
+        <ul id="cart-items" class="list-unstyled mb-3"></ul>
+        <div id="cart-total" class="fw-bold">Tổng: 0 đ</div>
+
+        <form id="payment-form">
+            <div class="mb-3">
+                <label for="fullname" class="form-label">Họ tên</label>
+                <input type="text" class="form-control" id="fullname" required>
+            </div>
+           
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+                <label for="phone" class="form-label">SĐT</label>
+                <input type="tel" class="form-control" id="phone" required>
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Địa chỉ giao hàng</label>
+                <input type="text" class="form-control" id="address" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Phương thức thanh toán</label>
+                <select class="form-select" required>
+                    <option value="cash">Thanh toán khi nhận hàng</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Xác nhận thanh toán</button>
+        </form>
+    </div>
+
+    <script>
+        // Hiển thị thông tin sản phẩm từ localStorage
+        const productInfo = JSON.parse(localStorage.getItem("productInfo"));
+        const productInfoDiv = document.getElementById("product-info");
+
+        if (productInfo) {
+            productInfoDiv.innerHTML = `
+                <img src="${productInfo.image}" alt="${productInfo.name}" width="100">
+                <p>Tên sản phẩm: ${productInfo.name}</p>
+                <p>Giá: ${productInfo.price.toLocaleString()} đ</p>
+            `;
+        } else {
+            productInfoDiv.innerHTML = '';
+        }
+
+        // Hiển thị sản phẩm trong giỏ hàng
+        document.addEventListener("DOMContentLoaded", function () {
+            const cart = JSON.parse(localStorage.getItem("cartInfo")) || [];
+
+            const cartItemsContainer = document.getElementById("cart-items"); // Phần tử để hiển thị sản phẩm
+            const cartTotal = document.getElementById("cart-total"); // Phần tử để hiển thị tổng giá
+
+            let total = 0;
+
+            if (cart.length > 0) {
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+
+                    const listItem = document.createElement("li");
+                    listItem.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}" width="50">
+                        ${item.name} - ${item.price.toLocaleString()} đ x <span class="quantity">${item.quantity}</span> =
+                        ${itemTotal.toLocaleString()} đ
+                    `;
+                    cartItemsContainer.appendChild(listItem);
+                });
+
+                cartTotal.textContent = `Tổng: ${total.toLocaleString()} đ`;
+            } else {
+                cartItemsContainer.innerHTML = "<li>Giỏ hàng trống</li>";
+                cartTotal.textContent = "Tổng: 0 đ";
+            }
+        });
+
+        // Xử lý sự kiện khi xác nhận thanh toán
+        document.getElementById("payment-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Ngăn chặn form gửi mặc định
+
+            // Xóa giỏ hàng
+            localStorage.removeItem("cartInfo");
+            localStorage.removeItem("productInfo");
+
+            // Thông báo thanh toán thành công
+            alert("Cảm ơn bạn! Thanh toán thành công.");
+
+            // Tự động quay về trang sản phẩm
+            window.location.href = "phukien.html"; // Thay đổi đường dẫn tới trang sản phẩm của bạn
+        });
+
+        // Reset dữ liệu khi thoát trang thanh toán
+        window.addEventListener("beforeunload", function() {
+        // Xóa giỏ hàng và thông tin sản phẩm
+        localStorage.removeItem("cartInfo");
+        localStorage.removeItem("productInfo");
+        });
+    </script>
+</body>
+</html>

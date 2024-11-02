@@ -1,0 +1,64 @@
+body {
+    background-color: #e9ecef;
+    font-family: Arial, sans-serif;
+    width: 80%;
+    margin: auto;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #343a40;
+}
+
+.container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin: auto;
+}
+
+.form-label {
+    font-weight: bold;
+    color: #495057;
+    display: block; /* Đảm bảo tiêu đề luôn hiển thị trên cùng */
+    margin-bottom: 5px; /* Khoảng cách giữa tiêu đề và ô nhập */
+}
+
+input.form-control,
+select.form-select {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    width: 100%; /* Đảm bảo ô nhập có chiều rộng 100% */
+    padding: 10px; /* Thêm padding cho ô nhập */
+    margin-bottom: 20px; /* Khoảng cách giữa các thành phần form */
+}
+
+input.form-control:focus,
+select.form-select:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+}
+
+.cart-total {
+    font-weight: bold; /* In đậm tổng giá */
+    border: 1px solid black; /* Viền 1px màu đen */
+    padding: 10px; /* Thêm padding cho ô tổng giá */
+    margin-top: 50px; /* Tăng khoảng cách với các phần tử phía trên */
+    background-color: #f8f9fa; /* Nền nhẹ cho ô tổng giá */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    cursor: pointer;
+}
