@@ -150,5 +150,3 @@ window.onclick = function (event) {
         cartModal.style.display = "none";
     }
 };
-
-
